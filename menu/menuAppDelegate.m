@@ -7,25 +7,56 @@
 //
 
 #import "menuAppDelegate.h"
-
 #import "menuMasterViewController.h"
+#import "menuCoreDataController.h"
+#import "SDSyncEngine.h"
+#import "Drink.h"
+#import "Meal.h"
+#import "CategoryDrink.h"
+
+@interface menuAppDelegate()
+
+@property (nonatomic, strong) menuCoreDataController * dataController;
+
+@end
+
+
 
 @implementation menuAppDelegate
 
-@synthesize managedObjectContext = _managedObjectContext;
-@synthesize managedObjectModel = _managedObjectModel;
-@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+//@synthesize managedObjectContext = _managedObjectContext;
+//@synthesize managedObjectModel = _managedObjectModel;
+//@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+
+- (menuCoreDataController *) dataController {
+    if (!_dataController) _dataController=[[menuCoreDataController alloc]init];
+    return _dataController;
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
     UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
-    UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
-    splitViewController.delegate = (id)navigationController.topViewController;
+    //UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
+    UIPageViewController *pageVC = [splitViewController.viewControllers lastObject];
+    //splitViewController.delegate = (id)navigationController.topViewController;
+    splitViewController.delegate = (id)pageVC;
 
-    UINavigationController *masterNavigationController = splitViewController.viewControllers[0];
+   /* ETAT INITIAL UINavigationController *masterNavigationController = splitViewController.viewControllers[0];
     menuMasterViewController *controller = (menuMasterViewController *)masterNavigationController.topViewController;
-    controller.managedObjectContext = self.managedObjectContext;
+    controller.managedObjectContext = self.dataController.masterManagedObjectContext;*/
+    
+    UITabBarController *masterTabBarController = splitViewController.viewControllers[0];
+    UINavigationController *masterNavigationController = (UINavigationController *)masterTabBarController.selectedViewController;
+    menuMasterViewController *controller = (menuMasterViewController *)masterNavigationController.topViewController;
+    controller.managedObjectContext = self.dataController.masterManagedObjectContext;
+
+    
+    
+    [[SDSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[Drink class]];
+    [[SDSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[CategoryDrink class]];
+
     return YES;
 }
 							
@@ -49,14 +80,16 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [[SDSyncEngine sharedEngine] startSync];
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Saves changes in the application's managed object context before the application terminates.
-    [self saveContext];
+    [self.dataController saveMasterContext];
 }
-
+/*
 - (void)saveContext
 {
     NSError *error = nil;
@@ -70,12 +103,12 @@
         } 
     }
 }
-
+*/
 #pragma mark - Core Data stack
 
 // Returns the managed object context for the application.
 // If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
-- (NSManagedObjectContext *)managedObjectContext
+/*- (NSManagedObjectContext *)managedObjectContext
 {
     if (_managedObjectContext != nil) {
         return _managedObjectContext;
@@ -83,38 +116,37 @@
     
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
+        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         [_managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
     return _managedObjectContext;
 }
-
+*/
 // Returns the managed object model for the application.
 // If the model doesn't already exist, it is created from the application's model.
-- (NSManagedObjectModel *)managedObjectModel
+/*- (NSManagedObjectModel *)managedObjectModel
 {
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"menu" withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"menuCoreDataModel" withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
-}
+}*/
 
 // Returns the persistent store coordinator for the application.
 // If the coordinator doesn't already exist, it is created and the application's store added to it.
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
+/*- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
 {
     if (_persistentStoreCoordinator != nil) {
         return _persistentStoreCoordinator;
     }
     
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"menu.sqlite"];
-    
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"menuCoreData.sqlite"];
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-        /*
+        //////////
          Replace this implementation with code to handle the error appropriately.
          
          abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
@@ -136,20 +168,20 @@
          
          Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
          
-         */
+         /////////
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }    
-    
     return _persistentStoreCoordinator;
 }
+*/
 
 #pragma mark - Application's Documents directory
 
 // Returns the URL to the application's Documents directory.
-- (NSURL *)applicationDocumentsDirectory
+/*- (NSURL *)applicationDocumentsDirectory
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-}
+}*/
 
 @end
