@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		093C7586180CC0CE00C8EF30 /* SDAFParseAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 093C7585180CC0CE00C8EF30 /* SDAFParseAPIClient.m */; };
+		0960F9E1181919AA00B7B826 /* menuDetailPageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0960F9E0181919AA00B7B826 /* menuDetailPageModel.m */; };
+		0960F9E418191B0E00B7B826 /* menuDetailPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0960F9E318191B0E00B7B826 /* menuDetailPageVC.m */; };
+		0960F9E718191C0100B7B826 /* menuDetailPageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0960F9E618191C0100B7B826 /* menuDetailPageController.m */; };
+		09620C4B1819DFD6009D869B /* menuEditingTV.m in Sources */ = {isa = PBXBuildFile; fileRef = 09620C4A1819DFD6009D869B /* menuEditingTV.m */; };
 		0964C8EB1814945300F15DF1 /* menuMasterViewTBVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0964C8EA1814945300F15DF1 /* menuMasterViewTBVCell.m */; };
 		0964C8F518149CCC00F15DF1 /* bottle.png in Resources */ = {isa = PBXBuildFile; fileRef = 0964C8F318149CCC00F15DF1 /* bottle.png */; };
 		0964C8F618149CCC00F15DF1 /* glass.png in Resources */ = {isa = PBXBuildFile; fileRef = 0964C8F418149CCC00F15DF1 /* glass.png */; };
@@ -17,7 +21,6 @@
 		0967A2A31816666B00FBEB21 /* CategoryDrink.m in Sources */ = {isa = PBXBuildFile; fileRef = 0967A2A21816666B00FBEB21 /* CategoryDrink.m */; };
 		0967A2A61816666B00FBEB21 /* Meal.m in Sources */ = {isa = PBXBuildFile; fileRef = 0967A2A51816666B00FBEB21 /* Meal.m */; };
 		0967A2A91816666B00FBEB21 /* Drink.m in Sources */ = {isa = PBXBuildFile; fileRef = 0967A2A81816666B00FBEB21 /* Drink.m */; };
-		0967A2AC1816AA5600FBEB21 /* menuPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0967A2AB1816AA5600FBEB21 /* menuPageViewController.m */; };
 		0983871D1802B3DC00144DC5 /* addEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0983871C1802B3DC00144DC5 /* addEditViewController.m */; };
 		0983871F1802C5CF00144DC5 /* belvedereIX.png in Resources */ = {isa = PBXBuildFile; fileRef = 0983871E1802C5CF00144DC5 /* belvedereIX.png */; };
 		098B111E17FEED8C004CB0E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 098B111D17FEED8C004CB0E9 /* Foundation.framework */; };
@@ -55,6 +58,14 @@
 /* Begin PBXFileReference section */
 		093C7584180CC0CE00C8EF30 /* SDAFParseAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDAFParseAPIClient.h; sourceTree = "<group>"; };
 		093C7585180CC0CE00C8EF30 /* SDAFParseAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDAFParseAPIClient.m; sourceTree = "<group>"; };
+		0960F9DF181919AA00B7B826 /* menuDetailPageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menuDetailPageModel.h; sourceTree = "<group>"; };
+		0960F9E0181919AA00B7B826 /* menuDetailPageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = menuDetailPageModel.m; sourceTree = "<group>"; };
+		0960F9E218191B0E00B7B826 /* menuDetailPageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menuDetailPageVC.h; sourceTree = "<group>"; };
+		0960F9E318191B0E00B7B826 /* menuDetailPageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = menuDetailPageVC.m; sourceTree = "<group>"; };
+		0960F9E518191C0100B7B826 /* menuDetailPageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menuDetailPageController.h; sourceTree = "<group>"; };
+		0960F9E618191C0100B7B826 /* menuDetailPageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = menuDetailPageController.m; sourceTree = "<group>"; };
+		09620C491819DFD6009D869B /* menuEditingTV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menuEditingTV.h; sourceTree = "<group>"; };
+		09620C4A1819DFD6009D869B /* menuEditingTV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = menuEditingTV.m; sourceTree = "<group>"; };
 		0964C8E91814945300F15DF1 /* menuMasterViewTBVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menuMasterViewTBVCell.h; sourceTree = "<group>"; };
 		0964C8EA1814945300F15DF1 /* menuMasterViewTBVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = menuMasterViewTBVCell.m; sourceTree = "<group>"; };
 		0964C8F318149CCC00F15DF1 /* bottle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottle.png; sourceTree = "<group>"; };
@@ -78,8 +89,6 @@
 		0967A2A51816666B00FBEB21 /* Meal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Meal.m; sourceTree = "<group>"; };
 		0967A2A71816666B00FBEB21 /* Drink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drink.h; sourceTree = "<group>"; };
 		0967A2A81816666B00FBEB21 /* Drink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Drink.m; sourceTree = "<group>"; };
-		0967A2AA1816AA5600FBEB21 /* menuPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menuPageViewController.h; sourceTree = "<group>"; };
-		0967A2AB1816AA5600FBEB21 /* menuPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = menuPageViewController.m; sourceTree = "<group>"; };
 		0983871B1802B3DC00144DC5 /* addEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addEditViewController.h; sourceTree = "<group>"; };
 		0983871C1802B3DC00144DC5 /* addEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addEditViewController.m; sourceTree = "<group>"; };
 		0983871E1802C5CF00144DC5 /* belvedereIX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = belvedereIX.png; sourceTree = "<group>"; };
@@ -140,6 +149,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0960F9E8181920B800B7B826 /* TMP */ = {
+			isa = PBXGroup;
+			children = (
+				098B113A17FEED8C004CB0E9 /* menuDetailViewController.h */,
+				098B113B17FEED8C004CB0E9 /* menuDetailViewController.m */,
+			);
+			name = TMP;
+			sourceTree = "<group>";
+		};
+		09620C471819D550009D869B /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				0960F9E518191C0100B7B826 /* menuDetailPageController.h */,
+				0960F9E618191C0100B7B826 /* menuDetailPageController.m */,
+				0960F9E218191B0E00B7B826 /* menuDetailPageVC.h */,
+				0960F9E318191B0E00B7B826 /* menuDetailPageVC.m */,
+			);
+			name = Detail;
+			sourceTree = "<group>";
+		};
+		09620C481819D559009D869B /* Master */ = {
+			isa = PBXGroup;
+			children = (
+				09620C491819DFD6009D869B /* menuEditingTV.h */,
+				09620C4A1819DFD6009D869B /* menuEditingTV.m */,
+				098B113717FEED8C004CB0E9 /* menuMasterViewController.h */,
+				098B113817FEED8C004CB0E9 /* menuMasterViewController.m */,
+				0967A29218164BB700FBEB21 /* menuMasterDetailTVC.h */,
+				0967A29318164BB700FBEB21 /* menuMasterDetailTVC.m */,
+			);
+			name = Master;
+			sourceTree = "<group>";
+		};
 		0964C8EC1814945A00F15DF1 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -152,16 +194,10 @@
 		0983871917FF083000144DC5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				0967A2AA1816AA5600FBEB21 /* menuPageViewController.h */,
-				0967A2AB1816AA5600FBEB21 /* menuPageViewController.m */,
-				098B113717FEED8C004CB0E9 /* menuMasterViewController.h */,
-				098B113817FEED8C004CB0E9 /* menuMasterViewController.m */,
-				0967A29218164BB700FBEB21 /* menuMasterDetailTVC.h */,
-				0967A29318164BB700FBEB21 /* menuMasterDetailTVC.m */,
+				09620C481819D559009D869B /* Master */,
+				09620C471819D550009D869B /* Detail */,
 				0983871B1802B3DC00144DC5 /* addEditViewController.h */,
 				0983871C1802B3DC00144DC5 /* addEditViewController.m */,
-				098B113A17FEED8C004CB0E9 /* menuDetailViewController.h */,
-				098B113B17FEED8C004CB0E9 /* menuDetailViewController.m */,
 				09B4BD98180D724300729501 /* menuCoreDataController.h */,
 				09B4BD99180D724300729501 /* menuCoreDataController.m */,
 			);
@@ -182,6 +218,8 @@
 		098387241802DBCD00144DC5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0960F9DF181919AA00B7B826 /* menuDetailPageModel.h */,
+				0960F9E0181919AA00B7B826 /* menuDetailPageModel.m */,
 				0967A2A71816666B00FBEB21 /* Drink.h */,
 				0967A2A81816666B00FBEB21 /* Drink.m */,
 				0967A2A41816666B00FBEB21 /* Meal.h */,
@@ -249,12 +287,13 @@
 		098B112517FEED8C004CB0E9 /* menu */ = {
 			isa = PBXGroup;
 			children = (
+				0960F9E8181920B800B7B826 /* TMP */,
 				0964C8EC1814945A00F15DF1 /* View */,
 				0983871917FF083000144DC5 /* Controller */,
 				098B113D17FEED8C004CB0E9 /* Images.xcassets */,
 				098387241802DBCD00144DC5 /* Model */,
-				09B4BD94180D3D0D00729501 /* Parse Sync with AFNetworking */,
 				09838728180345A500144DC5 /* Delegate */,
+				09B4BD94180D3D0D00729501 /* Parse Sync with AFNetworking */,
 				098B112617FEED8C004CB0E9 /* Supporting Files */,
 			);
 			path = menu;
@@ -439,17 +478,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0960F9E1181919AA00B7B826 /* menuDetailPageModel.m in Sources */,
 				098B113C17FEED8C004CB0E9 /* menuDetailViewController.m in Sources */,
 				09B4BD97180D3D6200729501 /* SDSyncEngine.m in Sources */,
 				0967A2A91816666B00FBEB21 /* Drink.m in Sources */,
 				093C7586180CC0CE00C8EF30 /* SDAFParseAPIClient.m in Sources */,
 				0983871D1802B3DC00144DC5 /* addEditViewController.m in Sources */,
 				0967A2A61816666B00FBEB21 /* Meal.m in Sources */,
-				0967A2AC1816AA5600FBEB21 /* menuPageViewController.m in Sources */,
 				098B112C17FEED8C004CB0E9 /* main.m in Sources */,
 				098B113917FEED8C004CB0E9 /* menuMasterViewController.m in Sources */,
 				0967A29418164BB700FBEB21 /* menuMasterDetailTVC.m in Sources */,
+				0960F9E718191C0100B7B826 /* menuDetailPageController.m in Sources */,
 				09B4BD9A180D724300729501 /* menuCoreDataController.m in Sources */,
+				0960F9E418191B0E00B7B826 /* menuDetailPageVC.m in Sources */,
+				09620C4B1819DFD6009D869B /* menuEditingTV.m in Sources */,
 				0967A2A31816666B00FBEB21 /* CategoryDrink.m in Sources */,
 				098B113017FEED8C004CB0E9 /* menuAppDelegate.m in Sources */,
 				0964C8EB1814945300F15DF1 /* menuMasterViewTBVCell.m in Sources */,

@@ -7,7 +7,6 @@
 //
 
 #import "menuMasterViewController.h"
-#import "menuDetailViewController.h"
 #import "menuCoreDataController.h"
 #import "Drink.h"
 #import "CategoryDrink.h"
@@ -20,25 +19,33 @@
 @property (nonatomic, strong) CategoryDrink *categoryDrink;
 @property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
 @property (nonatomic, strong) menuCoreDataController *dataController;
+@property (nonatomic, strong) NSString *entityToFetch;
+@property (nonatomic, strong) NSObject *productSelected;
+
+@property (strong, nonatomic) IBOutlet UITabBarItem *glassIcon;
+@property (strong, nonatomic) IBOutlet UITabBarItem *bottleIcon;
+@property (strong, nonatomic) IBOutlet UITabBarItem *home;
 @end
 
 @implementation menuMasterViewController
 
-
-//@synthesize entityName;
-//@synthesize refreshButton;
-//@synthesize dates;
-
-# pragma mark - Lazy instanciation @ Synthesize
+///////////////////////////////////////////////////////////////////////////
+//Lazy instanciation @ Synthesize
+///////////////////////////////////////////////////////////////////////////
 
 - (menuCoreDataController *) dataController {
     if (!_dataController) _dataController = [[menuCoreDataController alloc]init];
     return _dataController;
 }
 
+-(NSString *) entityToFetch {
+    if(!_entityToFetch) _entityToFetch = @"CategoryDrink";
+    return _entityToFetch;
+}
 
-# pragma mark - View Life Cycle
-
+///////////////////////////////////////////////////////////////////////////
+//LIFE CYCLE MANAGEMENT
+///////////////////////////////////////////////////////////////////////////
 - (void)awakeFromNib
 {
     self.clearsSelectionOnViewWillAppear = NO;
@@ -49,12 +56,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    //MAJ OD
-    //self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    UIViewController *pageViewController = [self.splitViewController.viewControllers lastObject];
-    //self.detailViewController = (menuDetailViewController *)pageViewController.childViewControllers.firstObject;
-    
     NSError *error;
     if (![[self fetchedResultsController] performFetch:&error]) {
         /*
@@ -96,19 +97,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*#pragma mark - Sync data
-- (void)loadRecordsFromCoreData {
-    [self.managedObjectContext performBlockAndWait:^{
-        [self.managedObjectContext reset];
-        NSError *error = nil;
-        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:self.entityName];
-        [request setSortDescriptors:[NSArray arrayWithObject:
-                                     [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]];
-        self.dates = [self.managedObjectContext executeFetchRequest:request error:&error];
-    }];
-}*/
-
-#pragma mark - Table View
+///////////////////////////////////////////////////////////////////////////
+//TABLE VIEW MANAGEMENT
+///////////////////////////////////////////////////////////////////////////
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -123,19 +114,28 @@
 
 - (void)configureCell:(menuMasterViewTBVCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    //Drink *drink = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    CategoryDrink *categoryDrink = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    self.productSelected = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell = (menuMasterViewTBVCell *) cell;
-    cell.textLabel.text = categoryDrink.label;
-    //cell.priceCell.text = [NSString stringWithFormat:@"%@",drink.price];
-    cell.imageCell.image = [UIImage imageWithData:categoryDrink.thumbnail];
-    
+
+    if ([self.productSelected isKindOfClass:[CategoryDrink class]]) {
+        CategoryDrink *categoryDrink = (CategoryDrink *) self.productSelected;
+        cell.titleProduct.text = categoryDrink.label;
+        cell.subtitleProduct.text = @"";
+        cell.labelIcon1.text=@"";
+        cell.labelIcon2.text=@"";
+        self.entityToFetch = @"Drink";
+    }
+    else if ([self.productSelected isKindOfClass:[Drink class]]) {
+        Drink *drink = (Drink *) self.productSelected;
+        cell.titleProduct.text = drink.name;
+        cell. labelIcon1.text = [NSString stringWithFormat:@"%@ E",drink.price];
+        //cell.imageCell.image = [UIImage imageWithData:drink.photo];
+    }
+
 }
 
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    
-    // Display the authors' names as section headings.
     return [[[self.fetchedResultsController sections] objectAtIndex:section] name];
 }
 
@@ -178,21 +178,38 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-#warning prefere check the kindofclass
-    self.categoryDrink = (CategoryDrink * ) object;
-   // self.detailViewController.drink = (Drink*) object;
+    if ([object isKindOfClass:[CategoryDrink class]]) self.categoryDrink = (CategoryDrink * ) object;
 }
 
-#pragma mark - Fetched results controller
+///////////////////////////////////////////////////////////////////////////
+//DATA MANAGEMENT
+///////////////////////////////////////////////////////////////////////////
+
+//A COMPLETER
+/*- (void)loadRecordsFromCoreData {
+ [self.managedObjectContext performBlockAndWait:^{
+ [self.managedObjectContext reset];
+ NSError *error = nil;
+ NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:self.entityName];
+ [request setSortDescriptors:[NSArray arrayWithObject:
+ [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]];
+ self.dates = [self.managedObjectContext executeFetchRequest:request error:&error];
+ }];
+ }*/
 
 -(NSString *) tabBarForPredicate {
-    NSLog(self.parentViewController.tabBarItem.title);
-    if ([self.parentViewController.tabBarItem.title isEqualToString : @"Verre"]) {
-        return @"Glass";}
-    else {
-        return @"Bottle";}
-    }
+    if (self.glassIcon.enabled) return @"Glass";
+    else if (self.bottleIcon.enabled) return @"Bottle";
+    else return @"";
+}
 
+-(NSString *) descriptorFromEntity {
+    NSString * descriptor;
+    if ([self.entityToFetch isEqualToString:@"CategoryDrink"]) descriptor = @"label";
+    else if ([self.entityToFetch isEqualToString:@"Drink"]) descriptor = @"name";
+    else descriptor = @"";
+    return descriptor;
+}
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
@@ -201,35 +218,23 @@
     }
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    // Edit the entity name as appropriate.
-    //NSEntityDescription *entity = [NSEntityDescription entityForName:@"Drink" inManagedObjectContext:self.dataController.masterManagedObjectContext];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"CategoryDrink" inManagedObjectContext:self.dataController.masterManagedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:self.entityToFetch inManagedObjectContext:self.dataController.masterManagedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
-    
-    
-    
-    
-    //NSString * containingString = @"Bottle";
+    //We use the tab bar Item as filter
     NSPredicate * containingPredicate = [NSPredicate predicateWithFormat:@"containing = %@",[self tabBarForPredicate]];
     fetchRequest.predicate = containingPredicate;
     
-    // Edit the sort key as appropriate.
-    //NSSortDescriptor *typeDescriptor = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:YES];
-    //NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-    NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey:@"label" ascending:YES];
+    // Edit the sort key as appropriate
+    NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey: [self descriptorFromEntity] ascending:YES];
 
     NSArray *sortDescriptors = @[nameDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
-    
 
-    // Edit the section name key path and cache name if appropriate.
-    // nil for section name key path means "no sections".
-    //NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.dataController.masterManagedObjectContext sectionNameKeyPath:@"type" cacheName:nil];
     NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.dataController.masterManagedObjectContext sectionNameKeyPath:nil cacheName:nil];
     aFetchedResultsController.delegate = self;
     
@@ -303,51 +308,20 @@
 
 
 
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-    
-    [super setEditing:editing animated:animated];
-    
-    if (editing) {
-        self.rightBarButtonItem = self.navigationItem.rightBarButtonItem;
-        self.navigationItem.rightBarButtonItem = nil;
-    }
-    else {
-        self.navigationItem.rightBarButtonItem = self.rightBarButtonItem;
-        self.rightBarButtonItem = nil;
-    }
-}
 
 
 
-#pragma mark - Segue management
+//////////////////////////////////////////////////////////////////
+//SEGUE MANAGEMENT
+//////////////////////////////////////////////////////////////////
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    
-    if ([[segue identifier] isEqualToString:@"addDrinkSegue"])
-    {
-        UINavigationController *navController = (UINavigationController *)[segue destinationViewController];
-        addEditViewController *aeVC = (addEditViewController *) [navController topViewController];
-        aeVC.delegate = self;
-        
-        // Create a new managed object context for the new book; set its parent to the fetched results controller's context.
-        NSManagedObjectContext *addingContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-        [addingContext setParentContext:[self.fetchedResultsController managedObjectContext]];
-
-        Drink *newDrink = (Drink *)[NSEntityDescription insertNewObjectForEntityForName:@"Drink" inManagedObjectContext:addingContext];
-        aeVC.managedObjectContext = addingContext;
-        aeVC.drink = newDrink;
-        
-        aeVC.managedObjectContext = addingContext;
-    }
-    
-    else if ([sender isKindOfClass:[UITableViewCell class]]) {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([sender isKindOfClass:[UITableViewCell class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
         if (indexPath) {
             if ([segue.identifier isEqualToString:@"showDetailTV"]){
                 if ([segue.destinationViewController respondsToSelector:@selector(setCategoryDrink:)]) {
                     [segue.destinationViewController setCategoryDrink:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-
                 }
             }
         }
@@ -356,51 +330,9 @@
 
 
 
-
-
-#pragma mark - Add controller delegate
-
-/*
- Add controller's delegate method; informs the delegate that the add operation has completed, and indicates whether the user saved the new book.
- */
-- (void)addEditViewController:(addEditViewController *)controller didFinishWithSave:(BOOL)save {
-    
-    if (save) {
-        /*
-         The new book is associated with the add controller's managed object context.
-         This means that any edits that are made don't affect the application's main managed object context -- it's a way of keeping disjoint edits in a separate scratchpad. Saving changes to that context, though, only push changes to the fetched results controller's context. To save the changes to the persistent store, you have to save the fetch results controller's context as well.
-         */
-        NSError *error;
-        NSManagedObjectContext *addingManagedObjectContext = [controller managedObjectContext];
-        if (![addingManagedObjectContext save:&error]) {
-            /*
-             Replace this implementation with code to handle the error appropriately.
-             
-             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-             */
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-        
-        if (![[self.fetchedResultsController managedObjectContext] save:&error]) {
-            /*
-             Replace this implementation with code to handle the error appropriately.
-             
-             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-             */
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-    }
-    
-    // Dismiss the modal view to return to the main list
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - Sync 
-- (IBAction)refreshButtonTouched:(UIBarButtonItem *)sender {
-    [[SDSyncEngine sharedEngine] startSync];
-}
+//////////////////////////////////////////////////////////////////
+//SYNC MANAGEMENT
+//////////////////////////////////////////////////////////////////
 
 - (void)checkSyncStatus {
     if ([[SDSyncEngine sharedEngine] syncInProgress]) {

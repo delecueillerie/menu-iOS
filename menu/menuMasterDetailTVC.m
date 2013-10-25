@@ -13,6 +13,7 @@
 #import "Drink.h"
 #import "CategoryDrink.h"
 #import "menuMasterViewTBVCell.h"
+#import "menuDetailPageModel.h"
 
 @interface menuMasterDetailTVC ()
 @property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
@@ -64,7 +65,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     //MAJ OD
     //self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    self.detailViewController = (menuDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+    //self.detailViewController = (menuDetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     
     NSError *error;
     if (![[self fetchedResultsController] performFetch:&error]) {
@@ -137,11 +138,11 @@
     Drink *drink = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell = (menuMasterViewTBVCell *) cell;
 
-    
+  /*
     cell.nameCell.text = drink.name;
     cell.priceCell.text = [NSString stringWithFormat:@"%@",drink.price];
     cell.imageCell.image = [UIImage imageWithData:drink.photo];
-    
+    */
 }
 
 
@@ -190,8 +191,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-#warning prefere check the kindofclass
-    self.detailViewController.drink = (Drink*) object;
+    //self.detailViewController.drink = (Drink*) object;
+    menuDetailPageModel * pageModel = [[menuDetailPageModel alloc]init];
+    [pageModel createCurrentPage:object];
 }
 
 #pragma mark - Fetched results controller

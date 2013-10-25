@@ -9,8 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface menuMasterViewTBVCell : UITableViewCell
-@property (strong, nonatomic) IBOutlet UIImageView *imageCell;
-@property (strong, nonatomic) IBOutlet UILabel *nameCell;
-@property (strong, nonatomic) IBOutlet UILabel *priceCell;
+@property (strong, nonatomic) IBOutlet UILabel *titleProduct;
+@property (strong, nonatomic) IBOutlet UILabel *subtitleProduct;
+@property (strong, nonatomic) IBOutlet UILabel *labelIcon1;
+@property (strong, nonatomic) IBOutlet UILabel *labelIcon2;
+@property (strong, nonatomic) IBOutlet UIImageView *icon1;
+@property (strong, nonatomic) IBOutlet UIImageView *icon2;
+
 
 @end
