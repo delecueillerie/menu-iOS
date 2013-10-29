@@ -1,17 +1,17 @@
 //
-//  menuDetailPageController.m
+//  menuDetailPVC.m
 //  menu
 //
 //  Created by Olivier Delecueillerie on 24/10/13.
 //  Copyright (c) 2013 Olivier Delecueillerie. All rights reserved.
 //
 
-#import "menuDetailPageController.h"
-#import "menuDetailPageModel.h"
-#import "menuDetailPageVC.h"
+#import "menuDetailPVC.h"
+#import "menuPageModel.h"
+#import "menuPage.h"
 
-@interface menuDetailPageController ()
-@property (readonly, strong, nonatomic) menuDetailPageModel *modelController;
+@interface menuDetailPVC ()
+@property (readonly, strong, nonatomic) menuPageModel *modelController;
 // Holds a reference to the split view controller's bar button item
 // if the button should be shown (the device is in portrait).
 // Will be nil otherwise.
@@ -23,7 +23,7 @@
 
 @end
 
-@implementation menuDetailPageController
+@implementation menuDetailPVC
 
 @synthesize modelController = _modelController;
 
@@ -35,7 +35,7 @@
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.delegate = self;
     
-    menuDetailPageVC *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];
+    menuPage *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard withViewControllerId:@"menuPageBig" ];
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
@@ -53,18 +53,12 @@
     [self pageControlInit];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (menuDetailPageModel *)modelController
+- (menuPageModel *)modelController
 {
     // Return the model controller object, creating it if necessary.
     // In more complex implementations, the model controller may be passed to the view controller.
     if (!_modelController) {
-        _modelController = [[menuDetailPageModel alloc] init];
+        _modelController = [[menuPageModel alloc] init];
     }
     return _modelController;
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3396" systemVersion="12F45" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3400" systemVersion="13A603" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="CategoryDrink" representedClassName="CategoryDrink" syncable="YES">
         <attribute name="containing" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
@@ -39,9 +39,17 @@
         <attribute name="syncStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
+    <entity name="SquareMenuAd" representedClassName="SquareMenuAd" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="media" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="Drink" positionX="0" positionY="0" width="128" height="270"/>
-        <element name="Meal" positionX="-324" positionY="123" width="128" height="120"/>
-        <element name="CategoryDrink" positionX="160" positionY="192" width="128" height="148"/>
+        <element name="CategoryDrink" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Drink" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Meal" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="SquareMenuAd" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

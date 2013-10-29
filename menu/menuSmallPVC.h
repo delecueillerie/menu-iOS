@@ -1,5 +1,5 @@
 //
-//  menuEditingTV.h
+//  menuSmallPVC.h
 //  menu
 //
 //  Created by Olivier Delecueillerie on 25/10/2013.
@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "addEditViewController.h"
 
-@interface menuEditingTV : UITableViewController <NSFetchedResultsControllerDelegate, addEditViewControllerDelegate>
+@interface menuSmallPVC : UIViewController <UIPageViewControllerDelegate>
+@property (strong, nonatomic) UIPageViewController *pageViewController;
 
 @end

@@ -1,5 +1,5 @@
 //
-//  menuDetailPageController.h
+//  menuDetailPVC.h
 //  menu
 //
 //  Created by Olivier Delecueillerie on 24/10/13.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface menuDetailPageController : UIViewController <UIPageViewControllerDelegate, UISplitViewControllerDelegate>
+@interface menuDetailPVC : UIViewController <UIPageViewControllerDelegate, UISplitViewControllerDelegate>
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 
 @end

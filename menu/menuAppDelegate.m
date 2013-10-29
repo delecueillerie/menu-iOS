@@ -12,8 +12,9 @@
 #import "menuMasterViewController.h"
 #import "menuCoreDataController.h"
 #import "SDSyncEngine.h"
-#import "menuDetailPageController.h"
+#import "menuPage.h"
 #import "Drink.h"
+#import "SquareMenuAd.h"
 @interface menuAppDelegate()
 
 @property (nonatomic, strong) menuCoreDataController * dataController;
@@ -36,16 +37,13 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
-    menuDetailPageController *pageController = [splitViewController.viewControllers lastObject];
+    menuPage *pageController = [splitViewController.viewControllers lastObject];
     splitViewController.delegate = (id)pageController;
-    
-    UITabBarController *masterTabBarController = [splitViewController.viewControllers firstObject] ;
-    UINavigationController *masterNavigationController = (UINavigationController *)masterTabBarController.childViewControllers.lastObject;
-    menuMasterViewController *controller = (menuMasterViewController *) masterNavigationController.childViewControllers.lastObject;
-    controller.managedObjectContext = self.dataController.masterManagedObjectContext;
 
-   [[SDSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[Drink class]];
-   [[SDSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[CategoryDrink class]];
+    [[SDSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[Drink class]];
+    [[SDSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[CategoryDrink class]];
+    [[SDSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[SquareMenuAd class]];
+
     
     return YES;
 }

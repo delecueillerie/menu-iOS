@@ -11,6 +11,7 @@
 #import "Drink.h"
 #import "CategoryDrink.h"
 #import "menuMasterViewTBVCell.h"
+#import "menuDrinksTVC.h" //use to send the object selected to the next table view controller
 
 @interface menuMasterViewController ()
 
@@ -19,7 +20,7 @@
 @property (nonatomic, strong) CategoryDrink *categoryDrink;
 @property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
 @property (nonatomic, strong) menuCoreDataController *dataController;
-@property (nonatomic, strong) NSString *entityToFetch;
+@property (nonatomic, strong) NSString *entity;
 @property (nonatomic, strong) NSObject *productSelected;
 
 @property (strong, nonatomic) IBOutlet UITabBarItem *glassIcon;
@@ -38,9 +39,9 @@
     return _dataController;
 }
 
--(NSString *) entityToFetch {
-    if(!_entityToFetch) _entityToFetch = @"CategoryDrink";
-    return _entityToFetch;
+-(NSString *) entity {
+    if(!_entity) _entity = @"CategoryDrink";
+    return _entity;
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -69,13 +70,12 @@
 }
 
 - (void)viewWillAppear {
-    [self.tableView reloadData];
+    [self loadRecordsFromCoreData];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] addObserverForName:@"SDSyncEngineSyncCompleted" object:nil queue:nil usingBlock:^(NSNotification *note) {
-//delete        [self loadRecordsFromCoreData];
-        [self.tableView reloadData];
+        [self loadRecordsFromCoreData];
     }];
     [[SDSyncEngine sharedEngine] addObserver:self forKeyPath:@"syncInProgress" options:NSKeyValueObservingOptionNew context:nil];
 }
@@ -119,17 +119,8 @@
 
     if ([self.productSelected isKindOfClass:[CategoryDrink class]]) {
         CategoryDrink *categoryDrink = (CategoryDrink *) self.productSelected;
-        cell.titleProduct.text = categoryDrink.label;
-        cell.subtitleProduct.text = @"";
-        cell.labelIcon1.text=@"";
-        cell.labelIcon2.text=@"";
-        self.entityToFetch = @"Drink";
-    }
-    else if ([self.productSelected isKindOfClass:[Drink class]]) {
-        Drink *drink = (Drink *) self.productSelected;
-        cell.titleProduct.text = drink.name;
-        cell. labelIcon1.text = [NSString stringWithFormat:@"%@ E",drink.price];
-        //cell.imageCell.image = [UIImage imageWithData:drink.photo];
+        cell.textLabel.text = categoryDrink.label;
+        cell.detailTextLabel.text=@"";
     }
 
 }
@@ -150,7 +141,7 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    return YES;
+    return NO;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -178,38 +169,25 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-    if ([object isKindOfClass:[CategoryDrink class]]) self.categoryDrink = (CategoryDrink * ) object;
+    if ([object isKindOfClass:[CategoryDrink class]]) {
+        self.fetchedResultsController =nil;
+        [self fetchedResultsController];
+        [self.tableView reloadData];
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////
 //DATA MANAGEMENT
 ///////////////////////////////////////////////////////////////////////////
 
-//A COMPLETER
-/*- (void)loadRecordsFromCoreData {
- [self.managedObjectContext performBlockAndWait:^{
- [self.managedObjectContext reset];
- NSError *error = nil;
- NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:self.entityName];
- [request setSortDescriptors:[NSArray arrayWithObject:
- [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:YES]]];
- self.dates = [self.managedObjectContext executeFetchRequest:request error:&error];
- }];
- }*/
-
--(NSString *) tabBarForPredicate {
-    if (self.glassIcon.enabled) return @"Glass";
-    else if (self.bottleIcon.enabled) return @"Bottle";
-    else return @"";
+- (void)loadRecordsFromCoreData {
+    [self.dataController.masterManagedObjectContext performBlockAndWait:^{
+        [self.dataController.masterManagedObjectContext reset];
+        [self.tableView reloadData];
+    }];
 }
 
--(NSString *) descriptorFromEntity {
-    NSString * descriptor;
-    if ([self.entityToFetch isEqualToString:@"CategoryDrink"]) descriptor = @"label";
-    else if ([self.entityToFetch isEqualToString:@"Drink"]) descriptor = @"name";
-    else descriptor = @"";
-    return descriptor;
-}
+
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
@@ -218,18 +196,18 @@
     }
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:self.entityToFetch inManagedObjectContext:self.dataController.masterManagedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:self.entity inManagedObjectContext:self.dataController.masterManagedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
     //We use the tab bar Item as filter
-    NSPredicate * containingPredicate = [NSPredicate predicateWithFormat:@"containing = %@",[self tabBarForPredicate]];
-    fetchRequest.predicate = containingPredicate;
+    //NSPredicate * containingPredicate = [NSPredicate predicateWithFormat:@"containing = %@",[self tabBarForPredicate]];
+    //fetchRequest.predicate = containingPredicate;
     
     // Edit the sort key as appropriate
-    NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey: [self descriptorFromEntity] ascending:YES];
+    NSSortDescriptor *nameDescriptor = [[NSSortDescriptor alloc] initWithKey: @"label" ascending:YES];
 
     NSArray *sortDescriptors = @[nameDescriptor];
     
@@ -306,11 +284,6 @@
 }
 
 
-
-
-
-
-
 //////////////////////////////////////////////////////////////////
 //SEGUE MANAGEMENT
 //////////////////////////////////////////////////////////////////
@@ -319,16 +292,18 @@
     if ([sender isKindOfClass:[UITableViewCell class]]) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
         if (indexPath) {
-            if ([segue.identifier isEqualToString:@"showDetailTV"]){
-                if ([segue.destinationViewController respondsToSelector:@selector(setCategoryDrink:)]) {
-                    [segue.destinationViewController setCategoryDrink:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+            if ([segue.identifier isEqualToString:@"fromCategoryToDrinks"]){
+                if ([segue.destinationViewController respondsToSelector:@selector(loadRecordsFromCoreData)]) {
+                    //[segue.destinationViewController loadRecordsFromCoreData]
                 }
+                UITabBarController *tbController = (UITabBarController *) segue.destinationViewController;
+                
+                menuDrinksTVC * drinksTVC = [tbController.childViewControllers firstObject];
+                drinksTVC.categoryDrink = [[self fetchedResultsController] objectAtIndexPath:indexPath];
             }
         }
     }
 }
-
-
 
 //////////////////////////////////////////////////////////////////
 //SYNC MANAGEMENT
@@ -351,7 +326,7 @@
 }
 
 - (void)removeActivityIndicatorFromRefreshButton {
-    self.navigationItem.leftBarButtonItem = self.refreshButton;
+    //self.navigationItem.leftBarButtonItem = self.refreshButton;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
