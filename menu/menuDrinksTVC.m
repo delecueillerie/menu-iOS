@@ -10,13 +10,13 @@
 #import "menuMasterViewController.h"
 #import "menuCoreDataController.h"
 #import "Drink.h"
-#import "menuMasterViewTBVCell.h"
-#import "menuPageModel.h"
+#import "menuDetailPVC.h"
 
 @interface menuDrinksTVC ()
 @property (nonatomic, strong) UIBarButtonItem *rightBarButtonItem;
 @property (nonatomic, strong) menuCoreDataController *dataController;
 @property (nonatomic, strong) NSString *entity;
+@property (nonatomic, strong) menuDetailPVC * drinkPVC;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 @end
@@ -38,6 +38,18 @@
     return _entity;
 }
 
+-(menuDetailPVC *) drinkPVC {
+    if(!_drinkPVC) {
+        id vcTested = [self.splitViewController.viewControllers lastObject];
+        if ([vcTested isKindOfClass:[menuDetailPVC class] ]) {
+            _drinkPVC = (menuDetailPVC *)vcTested;
+            NSLog(@"drinkPVC trouvé");
+        }
+    }
+    return _drinkPVC;
+}
+
+
 //////////////////////////////////////////////////////////////////
 //LIFE CYCLE MANAGEMENT
 //////////////////////////////////////////////////////////////////
@@ -46,7 +58,8 @@
 {
     [super awakeFromNib];
     self.clearsSelectionOnViewWillAppear = NO;
-    self.preferredContentSize = CGSizeMake(320.0, 600.0);
+#warning IOS7 only
+//    self.preferredContentSize = CGSizeMake(320.0, 600.0);
 }
 
 - (void)viewDidLoad
@@ -73,24 +86,26 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [self loadRecordsFromCoreData];
-    NSLog(@"Category %@",self.categoryDrink.label);
-    NSLog(@"tabBar %@", [self tabBarForPredicate]);
+    [self resizingVC:[UIApplication sharedApplication].statusBarOrientation];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"menuDrinkDidAppear" object:nil];
+}
+- (void) viewWillAppear:(BOOL)animated {
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"menuDrinkDidDisappear" object:nil];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
     for (menuDrinksTVC * viewController in self.parentViewController.childViewControllers) {
         if (!(self == viewController)) viewController.categoryDrink = self.categoryDrink;
-    }
+        }
 }
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
     // Release any properties that are loaded in viewDidLoad or can be recreated lazily.
     self.fetchedResultsController = nil;
-}
+    }
 
 //////////////////////////////////////////////////////////////////
 //TABLE VIEW MANAGEMENT
@@ -107,12 +122,16 @@
     return [sectionInfo numberOfObjects];
 }
 
-- (void)configureCell:(menuMasterViewTBVCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     Drink *drink = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell = (menuMasterViewTBVCell *) cell;
-    cell.titleProduct.text = drink.containing;
-    cell.subtitleProduct.text = [NSString stringWithFormat:@"%@",drink.price];
+    cell = (UITableViewCell *) cell;
+    if ([drink.containing isEqualToString:@"Bottle"]) {
+        cell.textLabel.text = [NSString stringWithFormat:@"Bouteille de %@ cl",drink.volume];
+    } else {
+        cell.textLabel.text = [NSString stringWithFormat:@"Verre de %@ cl",drink.volume];
+    }
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ €",drink.price];
     //cell.imageCell.image = [UIImage imageWithData:drink.photo];
 }
 
@@ -126,7 +145,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    menuMasterViewTBVCell *cell = [tableView dequeueReusableCellWithIdentifier:@"drink" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"drink" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
@@ -146,7 +165,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-
+    if ([object isKindOfClass:[Drink class]]) {
+        Drink * drink = (Drink*) object;
+        if (drink) {
+            self.drinkPVC.drinkList = [[NSArray alloc]initWithObjects:drink,nil];
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:@"drinkSelected"
+             object:object];
+        }
+    }
+    
 }
 
 
@@ -213,9 +241,9 @@
         //[self.dataController.masterManagedObjectContext reset];
         self.fetchedResultsController = nil;
         [self.tableView reloadData];
+        
     }];
 }
-
 
 //////////////////////////////////////////////////////////////////
 //SEGUE MANAGEMENT
@@ -234,6 +262,30 @@
     }
 }
 
+
+//////////////////////////////////////////////////////////////////
+//SIZE MANAGEMENT
+//////////////////////////////////////////////////////////////////
+
+- (void) resizingVC :(UIInterfaceOrientation) orientation {
+    CGRect portraitRect = CGRectMake(0, 0, 320, 500);
+    CGRect landscapeRect = CGRectMake(0, 0, 320, 340);
+    
+    if (orientation == UIDeviceOrientationPortrait||
+        orientation == UIDeviceOrientationPortraitUpsideDown) {
+        
+        self.view.frame = portraitRect;
+        self.parentViewController.view.frame =portraitRect;
+    } else {
+        self.view.frame = landscapeRect;
+        self.parentViewController.view.frame = landscapeRect;
+    }
+}
+
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self resizingVC:toInterfaceOrientation];
+}
 
 
 

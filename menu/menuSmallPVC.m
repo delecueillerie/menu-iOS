@@ -42,6 +42,7 @@
     self.pageViewController.delegate = self;
     
     menuPageSmall *startingViewController = (menuPageSmall *)[self.modelController viewControllerAtIndex:0 storyboard:self.storyboard withViewControllerId:@"menuPageSmall"];
+    if (!startingViewController) startingViewController =[[menuPageSmall alloc] init];
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     

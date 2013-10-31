@@ -8,24 +8,21 @@
 
 #import "menuDetailPVC.h"
 #import "menuPageModel.h"
-#import "menuPage.h"
+#import "Drink.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 @interface menuDetailPVC ()
 @property (readonly, strong, nonatomic) menuPageModel *modelController;
-// Holds a reference to the split view controller's bar button item
-// if the button should be shown (the device is in portrait).
-// Will be nil otherwise.
-@property (nonatomic, retain) UIBarButtonItem *navigationPaneButtonItem;
-// Holds a reference to the popover that will be displayed
-// when the navigation button is pressed.
-@property (strong, nonatomic) UIPopoverController *navigationPopoverController;
-@property (strong, nonatomic) IBOutlet UIPageControl *pageControl;
 
 @end
 
 @implementation menuDetailPVC
 
 @synthesize modelController = _modelController;
+
+////////////////////////////////////////////////////////////////////////
+//LIFE CYCLE MANAGEMENT
+////////////////////////////////////////////////////////////////////////
 
 - (void)viewDidLoad
 {
@@ -35,9 +32,10 @@
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.delegate = self;
     
-    menuPage *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard withViewControllerId:@"menuPageBig" ];
+    /*menuPageBig *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard withViewControllerId:@"menuPageBig" ];
     NSArray *viewControllers = @[startingViewController];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];*/
+    [self firstPageInit];
     
     self.pageViewController.dataSource = self.modelController;
     
@@ -50,7 +48,16 @@
     
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
     self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
+    
+    //Add the page control view
     [self pageControlInit];
+    
+    //Add the Notification for drink selected
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(drinkSelected:)
+                                                 name:@"drinkSelected"
+                                               object:nil];
+    
 }
 
 - (menuPageModel *)modelController
@@ -95,29 +102,79 @@
 ////////////////////////////////////////////////////////////////////////
 - (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
 {
-    barButtonItem.title = NSLocalizedString(@"Master", @"Master");
-    [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
-    self.navigationPopoverController = popoverController;
+    barButtonItem.title = @"Afficher le menu";
+   // [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
+    //self.navigationPopoverController = popoverController;
+    // Tell the detail view controller to show the navigation button.
+   // self.barButtonItem = barButtonItem;
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"splitVCWillHideVC" object:barButtonItem];
+    
 }
 
 - (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
 {
     // Called when the view is shown again in the split view, invalidating the button and popover controller.
-    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
-    self.navigationPopoverController = nil;
-    [self detailViewFrameForLandscapeOrientation:YES];
+    //[self.navigationItem setLeftBarButtonItem:nil animated:YES];
+   // self.navigationPopoverController = nil;
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"splitVCWillShowVC" object:barButtonItem];
 }
 
-- (void)detailViewFrameForLandscapeOrientation:(BOOL) landscapeOrientation {
-    if (landscapeOrientation){
-        for (UIViewController *viewController in self.pageViewController.viewControllers){
-            CGRect rectFrame1 = CGRectMake (320,0, 704, 768);
-            CGRect rectFrame2 = CGRectMake (320,0, 704, 700);
-            viewController.view.frame = rectFrame1;
-            UIView *mainView = [viewController.view.subviews firstObject];
-            mainView.frame = rectFrame2;
-            }
+
+////////////////////////////////////////////////////////////////////////
+//NOTIFICATION DRINK SELECTED MANAGEMENT
+////////////////////////////////////////////////////////////////////////
+
+-(void) drinkSelected :(NSNotification *)notification
+{
+    if ([notification.object isKindOfClass:[Drink class]]){
+        Drink * drinkSelected = (Drink *)notification.object;
+        self.modelController.pageData = [NSArray arrayWithObject:drinkSelected];
+        menuPageBig *viewController;
+        if ([drinkSelected.containing isEqualToString:@"Bottle"]) {
+            viewController = (menuPageBig *)[self.modelController viewControllerAtIndex:(0) storyboard:self.storyboard withViewControllerId:@"menuPageBottle"];
+        } else {
+            viewController = (menuPageBig *)[self.modelController viewControllerAtIndex:(0) storyboard:self.storyboard withViewControllerId:@"menuPageGlass"];
         }
+        NSArray *viewControllers =@[viewController];
+        [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    }
 }
+
+////////////////////////////////////////////////////////////////////////
+//SET THE FIRST PAGE
+////////////////////////////////////////////////////////////////////////
+- (void) firstPageInit {
+    
+    /* Create a new movie player object. */
+    MPMoviePlayerController *player = [[MPMoviePlayerController alloc] initWithContentURL:[self localMovieURL]];
+    self.modelController.pageData = [NSArray arrayWithObject:player];
+    menuPageBig *movieVC = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard withViewControllerId:@"menuMovie" ];
+    NSArray *viewControllers = @[movieVC];
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    
+}
+
+/* Returns a URL to a local movie in the app bundle. */
+-(NSURL *)localMovieURL
+{
+	NSURL *theMovieURL = nil;
+	NSBundle *bundle = [NSBundle mainBundle];
+	if (bundle)
+	{
+		NSString *moviePath = [bundle pathForResource:@"club1810" ofType:@"mov"];
+		if (moviePath)
+		{
+			theMovieURL = [NSURL fileURLWithPath:moviePath];
+		}
+	}
+    return theMovieURL;
+}
+
+//////////////////////////////////////////////////////////////////////////
+//SIZING VIEWS
+//////////////////////////////////////////////////////////////////////////
+
+
+
 
 @end

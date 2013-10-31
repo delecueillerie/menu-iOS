@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Olivier Delecueillerie. All rights reserved.
 //
 
-#import "menuPage.h"
 
-@interface menuPageSmall : menuPage
-@property (strong, nonatomic) IBOutlet UILabel *dataLabel;
+@interface menuPageSmall : UIViewController
+@property (strong, nonatomic) id dataObject;
+
 @end

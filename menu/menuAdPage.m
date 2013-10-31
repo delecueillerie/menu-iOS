@@ -57,6 +57,13 @@
     return dataViewController;
 }
 
+
+- (NSUInteger)indexOfViewController:(menuPageSmall *)viewController
+{
+    // Return the index of the given data view controller.
+    // For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
+    return [self.pageData indexOfObject:viewController.dataObject];
+}
 ///////////////////////////////////////////////////////////////////////////
 //DATA MANAGEMENT
 ///////////////////////////////////////////////////////////////////////////
@@ -100,6 +107,52 @@
 }
 
 
+
+
+////////////////////////////////////////////////////////////////////////////
+//Page View Controller Data Source DELEGATE
+///////////////////////////////////////////////////////////////////////////
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+{
+    self.index = [self indexOfViewController:(menuPageSmall *)viewController];
+    if ((self.index == 0) || (self.index == NSNotFound)) {
+        return nil;
+    }
+    
+    self.index--;
+    return [self viewControllerAtIndex:self.index storyboard:viewController.storyboard withViewControllerId:@"menuPageSmall"];
+
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+{
+    self.index = [self indexOfViewController:(menuPageSmall *)viewController];
+    if (self.index == NSNotFound) {
+        return nil;
+    }
+    
+    self.index++;
+    if (self.index == [self.pageData count]) {
+        return nil;
+    }
+    
+    return [self viewControllerAtIndex:self.index storyboard:viewController.storyboard withViewControllerId:@"menuPageSmall"];
+    
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////
+//FOR PAGE CONTROL
+///////////////////////////////////////////////////////////////////////////
+- (NSInteger) presentationIndexForPageViewController:(UIPageViewController *)pageViewController {
+    return self.index;
+}
+
+- (NSInteger) presentationCountForPageViewController:(UIPageViewController *)pageViewController {
+    return self.pageData.count;
+}
 
 
 

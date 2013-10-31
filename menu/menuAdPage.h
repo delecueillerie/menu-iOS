@@ -13,5 +13,5 @@
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSArray *pageData;
 - (menuPageSmall*)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
-
+- (NSUInteger)indexOfViewController:(menuPageSmall *)viewController;
 @end

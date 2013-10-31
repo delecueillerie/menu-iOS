@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-@class menuPage;
+#import "menuPageBig.h"
 
 @interface menuPageModel : NSObject <UIPageViewControllerDataSource>
-- (menuPage *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard withViewControllerId:(NSString *)viewControllerId;
-- (NSUInteger)indexOfViewController:(menuPage *)viewController;
+- (menuPageBig *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard withViewControllerId:(NSString *)viewControllerId;
+- (NSUInteger)indexOfViewController:(menuPageBig *)viewController;
 @property (strong, nonatomic) NSArray *pageData;
 
 @end

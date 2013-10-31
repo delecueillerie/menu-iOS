@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0919871C181AB5F00058A391 /* menuDrinksTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0919871B181AB5F00058A391 /* menuDrinksTVC.m */; };
+		0932CC77182137E60022338B /* club1810.mov in Resources */ = {isa = PBXBuildFile; fileRef = 0932CC76182137E60022338B /* club1810.mov */; };
 		093C7586180CC0CE00C8EF30 /* SDAFParseAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 093C7585180CC0CE00C8EF30 /* SDAFParseAPIClient.m */; };
-		09437155181E7C5200A629B7 /* menuPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 09437152181E7C5200A629B7 /* menuPage.m */; };
 		09437156181E7C5200A629B7 /* menuPageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 09437154181E7C5200A629B7 /* menuPageModel.m */; };
 		09437159181E7CF100A629B7 /* menuDetailPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 09437158181E7CF100A629B7 /* menuDetailPVC.m */; };
 		0943715C181E9FD400A629B7 /* menuSmallPVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 0943715B181E9FD400A629B7 /* menuSmallPVC.m */; };
@@ -17,7 +17,6 @@
 		09437162181EA7C400A629B7 /* menuPageBig.m in Sources */ = {isa = PBXBuildFile; fileRef = 09437161181EA7C400A629B7 /* menuPageBig.m */; };
 		09437165181EB95000A629B7 /* SquareMenuAd.m in Sources */ = {isa = PBXBuildFile; fileRef = 09437164181EB95000A629B7 /* SquareMenuAd.m */; };
 		09437168181EBADB00A629B7 /* menuAdPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 09437167181EBADB00A629B7 /* menuAdPage.m */; };
-		0964C8EB1814945300F15DF1 /* menuMasterViewTBVCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0964C8EA1814945300F15DF1 /* menuMasterViewTBVCell.m */; };
 		0964C8F518149CCC00F15DF1 /* bottle.png in Resources */ = {isa = PBXBuildFile; fileRef = 0964C8F318149CCC00F15DF1 /* bottle.png */; };
 		0964C8F618149CCC00F15DF1 /* glass.png in Resources */ = {isa = PBXBuildFile; fileRef = 0964C8F418149CCC00F15DF1 /* glass.png */; };
 		0967A28F1815615A00FBEB21 /* club1810.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0967A28E1815615A00FBEB21 /* club1810.jpg */; };
@@ -60,10 +59,9 @@
 /* Begin PBXFileReference section */
 		0919871A181AB5F00058A391 /* menuDrinksTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menuDrinksTVC.h; sourceTree = "<group>"; };
 		0919871B181AB5F00058A391 /* menuDrinksTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = menuDrinksTVC.m; sourceTree = "<group>"; };
+		0932CC76182137E60022338B /* club1810.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = club1810.mov; sourceTree = "<group>"; };
 		093C7584180CC0CE00C8EF30 /* SDAFParseAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDAFParseAPIClient.h; sourceTree = "<group>"; };
 		093C7585180CC0CE00C8EF30 /* SDAFParseAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDAFParseAPIClient.m; sourceTree = "<group>"; };
-		09437151181E7C5200A629B7 /* menuPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menuPage.h; sourceTree = "<group>"; };
-		09437152181E7C5200A629B7 /* menuPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = menuPage.m; sourceTree = "<group>"; };
 		09437153181E7C5200A629B7 /* menuPageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menuPageModel.h; sourceTree = "<group>"; };
 		09437154181E7C5200A629B7 /* menuPageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = menuPageModel.m; sourceTree = "<group>"; };
 		09437157181E7CF100A629B7 /* menuDetailPVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menuDetailPVC.h; sourceTree = "<group>"; };
@@ -78,8 +76,6 @@
 		09437164181EB95000A629B7 /* SquareMenuAd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SquareMenuAd.m; sourceTree = "<group>"; };
 		09437166181EBADB00A629B7 /* menuAdPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menuAdPage.h; sourceTree = "<group>"; };
 		09437167181EBADB00A629B7 /* menuAdPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = menuAdPage.m; sourceTree = "<group>"; };
-		0964C8E91814945300F15DF1 /* menuMasterViewTBVCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menuMasterViewTBVCell.h; sourceTree = "<group>"; };
-		0964C8EA1814945300F15DF1 /* menuMasterViewTBVCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = menuMasterViewTBVCell.m; sourceTree = "<group>"; };
 		0964C8F318149CCC00F15DF1 /* bottle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bottle.png; sourceTree = "<group>"; };
 		0964C8F418149CCC00F15DF1 /* glass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = glass.png; sourceTree = "<group>"; };
 		0967899C180C46A200817E4B /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
@@ -155,7 +151,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		09437169181EBAFB00A629B7 /* PageModel */ = {
+		0932CC6F182002160022338B /* Page */ = {
+			isa = PBXGroup;
+			children = (
+				09437160181EA7C400A629B7 /* menuPageBig.h */,
+				09437161181EA7C400A629B7 /* menuPageBig.m */,
+				0943715D181EA70E00A629B7 /* menuPageSmall.h */,
+				0943715E181EA70E00A629B7 /* menuPageSmall.m */,
+			);
+			name = Page;
+			sourceTree = "<group>";
+		};
+		09437169181EBAFB00A629B7 /* PageDataSource */ = {
 			isa = PBXGroup;
 			children = (
 				09437153181E7C5200A629B7 /* menuPageModel.h */,
@@ -163,7 +170,7 @@
 				09437166181EBADB00A629B7 /* menuAdPage.h */,
 				09437167181EBADB00A629B7 /* menuAdPage.m */,
 			);
-			name = PageModel;
+			name = PageDataSource;
 			sourceTree = "<group>";
 		};
 		09620C471819D550009D869B /* Detail */ = {
@@ -171,6 +178,10 @@
 			children = (
 				09437157181E7CF100A629B7 /* menuDetailPVC.h */,
 				09437158181E7CF100A629B7 /* menuDetailPVC.m */,
+				0943715A181E9FD400A629B7 /* menuSmallPVC.h */,
+				0943715B181E9FD400A629B7 /* menuSmallPVC.m */,
+				09437169181EBAFB00A629B7 /* PageDataSource */,
+				0932CC6F182002160022338B /* Page */,
 			);
 			name = Detail;
 			sourceTree = "<group>";
@@ -178,8 +189,6 @@
 		09620C481819D559009D869B /* Master */ = {
 			isa = PBXGroup;
 			children = (
-				0943715A181E9FD400A629B7 /* menuSmallPVC.h */,
-				0943715B181E9FD400A629B7 /* menuSmallPVC.m */,
 				098B113717FEED8C004CB0E9 /* menuMasterViewController.h */,
 				098B113817FEED8C004CB0E9 /* menuMasterViewController.m */,
 				0919871A181AB5F00058A391 /* menuDrinksTVC.h */,
@@ -188,24 +197,9 @@
 			name = Master;
 			sourceTree = "<group>";
 		};
-		0964C8EC1814945A00F15DF1 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				0964C8E91814945300F15DF1 /* menuMasterViewTBVCell.h */,
-				0964C8EA1814945300F15DF1 /* menuMasterViewTBVCell.m */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
 		0983871917FF083000144DC5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				09437151181E7C5200A629B7 /* menuPage.h */,
-				09437152181E7C5200A629B7 /* menuPage.m */,
-				09437160181EA7C400A629B7 /* menuPageBig.h */,
-				09437161181EA7C400A629B7 /* menuPageBig.m */,
-				0943715D181EA70E00A629B7 /* menuPageSmall.h */,
-				0943715E181EA70E00A629B7 /* menuPageSmall.m */,
 				09620C481819D559009D869B /* Master */,
 				09620C471819D550009D869B /* Detail */,
 				09B4BD98180D724300729501 /* menuCoreDataController.h */,
@@ -217,6 +211,7 @@
 		098387201802C5D900144DC5 /* media */ = {
 			isa = PBXGroup;
 			children = (
+				0932CC76182137E60022338B /* club1810.mov */,
 				0967A28E1815615A00FBEB21 /* club1810.jpg */,
 				0964C8F318149CCC00F15DF1 /* bottle.png */,
 				0964C8F418149CCC00F15DF1 /* glass.png */,
@@ -228,7 +223,6 @@
 		098387241802DBCD00144DC5 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				09437169181EBAFB00A629B7 /* PageModel */,
 				0967A2A71816666B00FBEB21 /* Drink.h */,
 				0967A2A81816666B00FBEB21 /* Drink.m */,
 				0967A2A41816666B00FBEB21 /* Meal.h */,
@@ -298,7 +292,6 @@
 		098B112517FEED8C004CB0E9 /* menu */ = {
 			isa = PBXGroup;
 			children = (
-				0964C8EC1814945A00F15DF1 /* View */,
 				0983871917FF083000144DC5 /* Controller */,
 				098B113D17FEED8C004CB0E9 /* Images.xcassets */,
 				098387241802DBCD00144DC5 /* Model */,
@@ -436,6 +429,7 @@
 				0967A28F1815615A00FBEB21 /* club1810.jpg in Resources */,
 				098B112A17FEED8C004CB0E9 /* InfoPlist.strings in Resources */,
 				098B113317FEED8C004CB0E9 /* Main.storyboard in Resources */,
+				0932CC77182137E60022338B /* club1810.mov in Resources */,
 				0964C8F518149CCC00F15DF1 /* bottle.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -501,11 +495,9 @@
 				09B4BD9A180D724300729501 /* menuCoreDataController.m in Sources */,
 				09437156181E7C5200A629B7 /* menuPageModel.m in Sources */,
 				09437162181EA7C400A629B7 /* menuPageBig.m in Sources */,
-				09437155181E7C5200A629B7 /* menuPage.m in Sources */,
 				09437165181EB95000A629B7 /* SquareMenuAd.m in Sources */,
 				0967A2A31816666B00FBEB21 /* CategoryDrink.m in Sources */,
 				098B113017FEED8C004CB0E9 /* menuAppDelegate.m in Sources */,
-				0964C8EB1814945300F15DF1 /* menuMasterViewTBVCell.m in Sources */,
 				09966345180AD68F0004D05E /* menuCoreDataModel.xcdatamodeld in Sources */,
 				0943715C181E9FD400A629B7 /* menuSmallPVC.m in Sources */,
 			);
@@ -562,7 +554,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -591,9 +583,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = iphoneos7.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -602,7 +594,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -625,7 +617,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
@@ -645,6 +638,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "menu/menu-Prefix.pch";
 				INFOPLIST_FILE = "menu/menu-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -664,6 +658,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "menu/menu-Prefix.pch";
 				INFOPLIST_FILE = "menu/menu-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

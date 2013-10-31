@@ -21,5 +21,4 @@
 - (void)saveBackgroundContext;
 - (NSManagedObjectModel *)managedObjectModel;
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator;
-
 @end

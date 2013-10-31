@@ -12,9 +12,9 @@
 #import "menuMasterViewController.h"
 #import "menuCoreDataController.h"
 #import "SDSyncEngine.h"
-#import "menuPage.h"
 #import "Drink.h"
 #import "SquareMenuAd.h"
+#import "menuPageBig.h"
 @interface menuAppDelegate()
 
 @property (nonatomic, strong) menuCoreDataController * dataController;
@@ -37,7 +37,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
-    menuPage *pageController = [splitViewController.viewControllers lastObject];
+    menuPageBig *pageController = [splitViewController.viewControllers lastObject];
     splitViewController.delegate = (id)pageController;
 
     [[SDSyncEngine sharedEngine] registerNSManagedObjectClassToSync:[Drink class]];

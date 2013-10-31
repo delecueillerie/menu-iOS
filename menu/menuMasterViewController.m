@@ -10,7 +10,6 @@
 #import "menuCoreDataController.h"
 #import "Drink.h"
 #import "CategoryDrink.h"
-#import "menuMasterViewTBVCell.h"
 #import "menuDrinksTVC.h" //use to send the object selected to the next table view controller
 
 @interface menuMasterViewController ()
@@ -22,10 +21,6 @@
 @property (nonatomic, strong) menuCoreDataController *dataController;
 @property (nonatomic, strong) NSString *entity;
 @property (nonatomic, strong) NSObject *productSelected;
-
-@property (strong, nonatomic) IBOutlet UITabBarItem *glassIcon;
-@property (strong, nonatomic) IBOutlet UITabBarItem *bottleIcon;
-@property (strong, nonatomic) IBOutlet UITabBarItem *home;
 @end
 
 @implementation menuMasterViewController
@@ -50,7 +45,8 @@
 - (void)awakeFromNib
 {
     self.clearsSelectionOnViewWillAppear = NO;
-    self.preferredContentSize = CGSizeMake(320.0, 600.0);
+#warning IOS7 only
+    //self.preferredContentSize = CGSizeMake(320.0, 600.0);
     [super awakeFromNib];
 }
 
@@ -71,6 +67,8 @@
 
 - (void)viewWillAppear {
     [self loadRecordsFromCoreData];
+    [self resizingVC:[UIApplication sharedApplication].statusBarOrientation];
+    
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -78,12 +76,16 @@
         [self loadRecordsFromCoreData];
     }];
     [[SDSyncEngine sharedEngine] addObserver:self forKeyPath:@"syncInProgress" options:NSKeyValueObservingOptionNew context:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"menuMasterDidAppear" object:nil];
+
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"SDSyncEngineSyncCompleted" object:nil];
     [[SDSyncEngine sharedEngine] removeObserver:self forKeyPath:@"syncInProgress"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"menuMasterDidDisappear" object:nil];
+
 }
 
 - (void)viewDidUnload
@@ -112,10 +114,10 @@
     return [sectionInfo numberOfObjects];
 }
 
-- (void)configureCell:(menuMasterViewTBVCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     self.productSelected = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell = (menuMasterViewTBVCell *) cell;
+    cell = (UITableViewCell *) cell;
 
     if ([self.productSelected isKindOfClass:[CategoryDrink class]]) {
         CategoryDrink *categoryDrink = (CategoryDrink *) self.productSelected;
@@ -133,7 +135,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    menuMasterViewTBVCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
@@ -170,9 +172,9 @@
 {
     NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
     if ([object isKindOfClass:[CategoryDrink class]]) {
-        self.fetchedResultsController =nil;
-        [self fetchedResultsController];
-        [self.tableView reloadData];
+       /* [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"categorySelected"
+         object:object];*/
     }
 }
 
@@ -335,6 +337,22 @@
         [self checkSyncStatus];
     }
 }
+
+//////////////////////////////////////////////////////////////////
+//SIZE MANAGEMENT
+//////////////////////////////////////////////////////////////////
+
+- (void) resizingVC :(UIInterfaceOrientation) orientation {
+    if (orientation == UIDeviceOrientationPortrait) self.view.frame = CGRectMake(0, 0, 320, 660);
+    else self.view.frame = CGRectMake(0, 0, 320, 100);
+}
+
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [self resizingVC:toInterfaceOrientation];
+}
+
+
 
 @end
 
